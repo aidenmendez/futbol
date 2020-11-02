@@ -41,7 +41,6 @@ class GameTeamsManager
         percent
       end[0]
     end
-    
   end
 
   def game_team_by_season(season)
@@ -85,5 +84,75 @@ class GameTeamsManager
 
   def calc_percentage(numerator, denominator)
     (numerator.to_f / denominator).round(2)
+  end
+
+  def most_accurate_team(season)
+    accurate_team(season, "most")
+  end
+
+  def least_accurate_team(season)
+    accurate_team(season, "least")
+  end
+  
+  def accurate_team(season, status)
+    season = season.to_s
+    seasonal_games = game_team_by_season(season)
+    team_stats = get_game_stats(season, seasonal_games)
+
+    if status == "most"
+      accurate_team_id = team_stats.max_by do |team_id, stats|
+        stats[:goals].to_f / stats[:shots]
+      end[0]
+    elsif status == "least"
+      accurate_team_id = team_stats.min_by do |team_id, stats|
+        stats[:goals].to_f / stats[:shots]
+      end[0]
+    end
+
+    team_name = parent.get_team_name(accurate_team_id)
+  end
+
+  def get_game_stats(season, seasonal_games)
+    team_stats = {}
+    seasonal_games.each do |seasonal_game|
+      if !team_stats.key?(seasonal_game.team_id)
+        team_stats[seasonal_game.team_id] = {
+          :shots => seasonal_game.shots,
+          :goals => seasonal_game.goals,
+          :tackles => seasonal_game.tackles
+        }
+      else
+        team_stats[seasonal_game.team_id][:shots] += seasonal_game.shots
+        team_stats[seasonal_game.team_id][:goals] += seasonal_game.goals    
+        team_stats[seasonal_game.team_id][:tackles] += seasonal_game.tackles
+      end
+    end
+    team_stats
+  end
+
+  def most_tackles(season)
+    tackles(season, "most")
+  end
+
+  def fewest_tackles(season)
+    tackles(season, "fewest")
+  end
+  
+  def tackles(season, status)
+    season = season.to_s
+    seasonal_games = game_team_by_season(season)
+    team_stats = get_game_stats(season, seasonal_games)
+
+    if status == "most"
+      tackles_team_id = team_stats.max_by do |team_id, stats|
+        stats[:tackles]
+      end[0]
+    elsif status == "fewest"
+      tackles_team_id = team_stats.min_by do |team_id, stats|
+        stats[:tackles]
+      end[0]
+    end
+    
+    team_name = parent.get_team_name(tackles_team_id)
   end
 end
