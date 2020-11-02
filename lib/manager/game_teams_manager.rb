@@ -103,6 +103,14 @@ class GameTeamsManager
     calc_percentage(visitor_wins, total_games)
   end
 
+  def percentage_ties
+    ties = 0
+    game_teams.each do |game_team|
+      ties += 0.5 if game_team.result == "TIE"
+    end
+    calc_percentage(ties, total_games)
+  end
+
   def calc_percentage(numerator, denominator)
     (numerator.to_f / denominator).round(2)
   end
