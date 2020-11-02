@@ -48,4 +48,21 @@ class GamesManager
     end
     total_goals.to_f / (games.count)
   end
+
+  def average_goals_by_season
+    season_average_goals = count_of_games_by_season
+    seasons = season_average_goals.keys
+    seasons.each do |season|
+      total_goals = 0
+
+      games.each do |game|
+        next if season != game.season
+        total_goals += game.total_score
+      end
+      
+      avg = (total_goals.to_f / season_average_goals[season]).round(2)
+      season_average_goals[season] = avg
+    end
+    season_average_goals
+  end
 end
