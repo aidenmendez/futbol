@@ -95,6 +95,14 @@ class GameTeamsManager
     calc_percentage(home_wins, total_games)
   end
 
+  def percentage_visitor_wins 
+    visitor_wins = 0 
+    game_teams.each do |game_team|
+      visitor_wins += 1 if game_team.result == "WIN" && game_team.hoa == "away"
+    end
+    calc_percentage(visitor_wins, total_games)
+  end
+
   def calc_percentage(numerator, denominator)
     (numerator.to_f / denominator).round(2)
   end
