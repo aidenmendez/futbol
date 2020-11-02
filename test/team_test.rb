@@ -4,8 +4,8 @@ class TeamTest < Minitest::Test
   def setup
     row = {
       team_id: "1",
-      franchiseId: "16",
-      teamName: "Atlanta United",
+      franchiseid: "16",
+      teamname: "Atlanta United",
       abbreviation: "ATL",
       stadium: "Mercedes-Benz Stadium",
       link: "/api/v1/teams/1"
