@@ -50,4 +50,8 @@ class GameTeamsManagerTest < Minitest::Test
   def test_worst_coach
     assert_equal "Ted Nolan", @game_teams_manager.worst_coach("20142015")
   end
+
+  def test_most_accurate_team_zzz
+    assert_equal "Sporting Kansas City", @game_teams_manager.most_accurate_team("20152016")
+  end
 end
