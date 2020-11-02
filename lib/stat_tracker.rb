@@ -1,30 +1,43 @@
-# Sum up Away and Home team's score per game_id
-# Get data by col
-# Col by winning score + Col by losing score
-# Parse CSV table initially and save as instance variable
-# Method will iterate through instance variable
 require 'csv'
 
 class StatTracker
-  attr_reader :games, :game_teams, :teams
+  attr_reader :games_path, 
+              :game_teams_path, 
+              :teams_path,
+              :game_teams_manager,
+              :games_manager,
+              :game,
+              :team,
+              :teams_manager
+
   def self.from_csv(locations)
     new(locations)
   end
   
   def initialize(locations)
-    @games = locations[:games]
-    @game_teams = locations[:game_teams]
-    @teams = locations[:teams]
+    @games_path = locations[:games]
+    @game_teams_path = locations[:game_teams]
+    @teams_path = locations[:teams]
+    @games_manager = GamesManager.get_data(games_path, self)
+    @game_teams_manager = GameTeamsManager.get_data(game_teams_path, self)
+    @teams_manager = TeamsManager.get_data(teams_path, self)
   end
+
+  def game_ids_by_season(season)
+    @games_manager.game_ids_by_season(season)
+  end
+
+
+  # ===============================================================
   
-  def highest_total_score
-    most = 0
-    CSV.foreach(games, :headers => true, header_converters: :symbol) do |row|
-      total = row[:away_goals].to_i + row[:home_goals].to_i
-      most = total if total > most
-    end
-    most
-  end
+  # def highest_total_score
+  #   most = 0
+  #   CSV.foreach(games, :headers => true, header_converters: :symbol) do |row|
+  #     total = row[:away_goals].to_i + row[:home_goals].to_i
+  #     most = total if total > most
+  #   end
+  #   most
+  # end
   
   def lowest_total_score
     least = 1000
@@ -267,44 +280,44 @@ class StatTracker
     end
   end
 
-  def winningest_coach(season)
-    season = season.to_s
-    coaches_by_id = {}
-    game_counts = {}
-    team_percentage = {}
-    # generate coaches_by_id key/value pairs
-    CSV.foreach(game_teams, headers: true, header_converters: :symbol) do |row|
-      next if coaches_by_id.key?(row[:team_id])
-      coaches_by_id[row[:team_id]] = row[:head_coach]
-    end
-    # generate empty game_counts key/value pairs
-    CSV.foreach(games, headers: true, header_converters: :symbol) do |row|
-      next if row[:season] != season
-      game_counts[row[:home_team_id]] = [0, 0] if !game_counts.key?(row[:home_team_id])
+  # def winningest_coach(season)
+  #   season = season.to_s
+  #   coaches_by_id = {}
+  #   game_counts = {}
+  #   team_percentage = {}
+  #   # generate coaches_by_id key/value pairs
+  #   CSV.foreach(game_teams, headers: true, header_converters: :symbol) do |row|
+  #     next if coaches_by_id.key?(row[:team_id])
+  #     coaches_by_id[row[:team_id]] = row[:head_coach]
+  #   end
+  #   # generate empty game_counts key/value pairs
+  #   CSV.foreach(games, headers: true, header_converters: :symbol) do |row|
+  #     next if row[:season] != season
+  #     game_counts[row[:home_team_id]] = [0, 0] if !game_counts.key?(row[:home_team_id])
       
-      game_counts[row[:away_team_id]] = [0, 0] if !game_counts.key?(row[:away_team_id])
-    end
-    # generate wins and total games for game_counts values array
-    CSV.foreach(games, headers: true, header_converters: :symbol) do |row|
-      next if row[:season] != season
-      game_counts[row[:home_team_id]][1] += 1
-      game_counts[row[:away_team_id]][1] += 1
-      if row[:away_goals] > row[:home_goals]
-        game_counts[row[:away_team_id]][0] += 1
-      elsif row[:home_goals] > row[:away_goals]
-        game_counts[row[:home_team_id]][0] += 1
-      end
-    end
+  #     game_counts[row[:away_team_id]] = [0, 0] if !game_counts.key?(row[:away_team_id])
+  #   end
+  #   # generate wins and total games for game_counts values array
+  #   CSV.foreach(games, headers: true, header_converters: :symbol) do |row|
+  #     next if row[:season] != season
+  #     game_counts[row[:home_team_id]][1] += 1
+  #     game_counts[row[:away_team_id]][1] += 1
+  #     if row[:away_goals] > row[:home_goals]
+  #       game_counts[row[:away_team_id]][0] += 1
+  #     elsif row[:home_goals] > row[:away_goals]
+  #       game_counts[row[:home_team_id]][0] += 1
+  #     end
+  #   end
     
-    game_counts.each do |team_id, data|
-      percentage = calc_percentage(data[0], data[1])
-      team_percentage[team_id] = percentage
-    end
-    winning_team = team_percentage.max_by do |team_id, percentage|
-      percentage
-    end
-    winning_coach = coaches_by_id[winning_team[0]]
-  end
+  #   game_counts.each do |team_id, data|
+  #     percentage = calc_percentage(data[0], data[1])
+  #     team_percentage[team_id] = percentage
+  #   end
+  #   winning_team = team_percentage.max_by do |team_id, percentage|
+  #     percentage
+  #   end
+  #   winning_coach = coaches_by_id[winning_team[0]]
+  # end
   
   def worst_coach(season)
     season = season.to_s

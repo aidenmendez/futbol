@@ -1,5 +1,3 @@
-require 'Minitest/autorun'
-require 'Minitest/pride'
 require_relative './test_helper'
 
 class TeamTest < Minitest::Test
