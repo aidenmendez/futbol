@@ -33,4 +33,12 @@ class GamesManager
       game.game_id
     end
   end
+
+  def count_of_games_by_season
+    season_games = Hash.new(0)
+    games.each do |game|
+      season_games[game.season] += 1
+    end
+    season_games
+  end
 end
