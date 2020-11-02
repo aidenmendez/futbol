@@ -48,75 +48,75 @@ class StatTracker
     least
   end
   
-  def percentage_home_wins
-    home_wins = 0
-    visitor_wins = 0
-    ties = 0
-    CSV.foreach(game_teams, headers: true, header_converters: :symbol) do |row|
-      next if row[:result] == "LOSS"
-      if row[:result] == "TIE"
-        ties += 0.5
-      elsif row[:hoa] == "away"
-        visitor_wins += 1
-      elsif row[:hoa] == "home"
-        home_wins += 1
-      end
-    end
-    total_games = home_wins + visitor_wins + ties
-    percentage = calc_percentage(home_wins, total_games)
-  end
+  # def percentage_home_wins
+  #   home_wins = 0
+  #   visitor_wins = 0
+  #   ties = 0
+  #   CSV.foreach(game_teams, headers: true, header_converters: :symbol) do |row|
+  #     next if row[:result] == "LOSS"
+  #     if row[:result] == "TIE"
+  #       ties += 0.5
+  #     elsif row[:hoa] == "away"
+  #       visitor_wins += 1
+  #     elsif row[:hoa] == "home"
+  #       home_wins += 1
+  #     end
+  #   end
+  #   total_games = home_wins + visitor_wins + ties
+  #   percentage = calc_percentage(home_wins, total_games)
+  # end
 
-  def percentage_visitor_wins
-    home_wins = 0
-    visitor_wins = 0
-    ties = 0
-    CSV.foreach(game_teams, headers: true, header_converters: :symbol) do |row|
-      next if row[:result] == "LOSS"
-      if row[:result] == "TIE"
-        ties += 0.5
-      elsif row[:hoa] == "away"
-        visitor_wins += 1
-      elsif row[:hoa] == "home"
-        home_wins += 1
-      end
-    end
-    total_games = home_wins + visitor_wins + ties
-    percentage = calc_percentage(visitor_wins, total_games)
-  end
+  # def percentage_visitor_wins
+  #   home_wins = 0
+  #   visitor_wins = 0
+  #   ties = 0
+  #   CSV.foreach(game_teams, headers: true, header_converters: :symbol) do |row|
+  #     next if row[:result] == "LOSS"
+  #     if row[:result] == "TIE"
+  #       ties += 0.5
+  #     elsif row[:hoa] == "away"
+  #       visitor_wins += 1
+  #     elsif row[:hoa] == "home"
+  #       home_wins += 1
+  #     end
+  #   end
+  #   total_games = home_wins + visitor_wins + ties
+  #   percentage = calc_percentage(visitor_wins, total_games)
+  # end
   
-  def percentage_ties
-    home_wins = 0
-    visitor_wins = 0
-    ties = 0.0
-    CSV.foreach(game_teams, headers: true, header_converters: :symbol) do |row|
-      next if row[:result] == "LOSS"
-      if row[:result] == "TIE"
-        ties += 0.5
-      elsif row[:hoa] == "away"
-        visitor_wins += 1
-      elsif row[:hoa] == "home"
-        home_wins += 1
-      end
-    end
-    total_games = home_wins + visitor_wins + ties
-    percentage = calc_percentage(ties, total_games)
-  end
+  # def percentage_ties
+  #   home_wins = 0
+  #   visitor_wins = 0
+  #   ties = 0.0
+  #   CSV.foreach(game_teams, headers: true, header_converters: :symbol) do |row|
+  #     next if row[:result] == "LOSS"
+  #     if row[:result] == "TIE"
+  #       ties += 0.5
+  #     elsif row[:hoa] == "away"
+  #       visitor_wins += 1
+  #     elsif row[:hoa] == "home"
+  #       home_wins += 1
+  #     end
+  #   end
+  #   total_games = home_wins + visitor_wins + ties
+  #   percentage = calc_percentage(ties, total_games)
+  # end
   
-  def count_of_games_by_season
-    season_games = {}
-    CSV.foreach(games, headers: true, header_converters: :symbol) do |row|
-      if season_games.key?(row[:season])
-        season_games[row[:season]] += 1
-      else
-        season_games[row[:season]] = 1
-      end
-    end
-    season_games
-  end
+  # def count_of_games_by_season
+  #   season_games = {}
+  #   CSV.foreach(games, headers: true, header_converters: :symbol) do |row|
+  #     if season_games.key?(row[:season])
+  #       season_games[row[:season]] += 1
+  #     else
+  #       season_games[row[:season]] = 1
+  #     end
+  #   end
+  #   season_games
+  # end
   
-  def calc_percentage(numerator, denominator)
-    (numerator.to_f / denominator * 100).round(2)
-  end
+  # def calc_percentage(numerator, denominator)
+  #   (numerator.to_f / denominator * 100).round(2)
+  # end
   
   def average_goals_per_game
     total_goals = 0
