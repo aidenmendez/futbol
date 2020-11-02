@@ -49,23 +49,23 @@ class StatTrackerTest < MiniTest::Test
     #assert_equal hash, @stat_tracker.count_of_games_by_season
   #end
   
-  def test_average_goals_per_game
-    avg = 3.95
+  # def test_average_goals_per_game
+  #   avg = 3.95
     
-    assert_equal avg, @stat_tracker.average_goals_per_game
-  end
+  #   assert_equal avg, @stat_tracker.average_goals_per_game
+  # end
   
-  def test_average_goals_by_season
-    hash = {
-      "20122013" => 3.86,
-      "20132014" => 4.33,
-      "20142015" => 4.00,
-      "20152016" => 3.88,
-      "20162017" => 4.75
-    }
+  # def test_average_goals_by_season
+  #   hash = {
+  #     "20122013" => 3.86,
+  #     "20132014" => 4.33,
+  #     "20142015" => 4.00,
+  #     "20152016" => 3.88,
+  #     "20162017" => 4.75
+  #   }
     
-    assert_equal hash, @stat_tracker.average_goals_by_season
-  end
+  #   assert_equal hash, @stat_tracker.average_goals_by_season
+  # end
 
 # League Statistics Methods
   def test_count_of_teams

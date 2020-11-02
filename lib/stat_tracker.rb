@@ -118,42 +118,42 @@ class StatTracker
   #   (numerator.to_f / denominator * 100).round(2)
   # end
   
-  def average_goals_per_game
-    total_goals = 0
-    game_count = 0
-    CSV.foreach(games, headers: true, header_converters: :symbol) do |row|
-      total_goals += row[:home_goals].to_i
-      total_goals += row[:away_goals].to_i
-      game_count += 1
-    end
-    avg = (total_goals.to_f / game_count).round(2)
-  end
+  # def average_goals_per_game
+  #   total_goals = 0
+  #   game_count = 0
+  #   CSV.foreach(games, headers: true, header_converters: :symbol) do |row|
+  #     total_goals += row[:home_goals].to_i
+  #     total_goals += row[:away_goals].to_i
+  #     game_count += 1
+  #   end
+  #   avg = (total_goals.to_f / game_count).round(2)
+  # end
   
-  def average_goals_by_season
-    season_avgs = {}
-    seasons = []
+  # def average_goals_by_season
+  #   season_avgs = {}
+  #   seasons = []
   
-      CSV.foreach(games, headers: true, header_converters: :symbol) do |row|
-        next if seasons.include?(row[:season])
-        seasons << row[:season]
-      end
+  #     CSV.foreach(games, headers: true, header_converters: :symbol) do |row|
+  #       next if seasons.include?(row[:season])
+  #       seasons << row[:season]
+  #     end
   
-    seasons.each do |season|
-      total_goals = 0
-      game_count = 0
+  #   seasons.each do |season|
+  #     total_goals = 0
+  #     game_count = 0
   
-      CSV.foreach(games, headers: true, header_converters: :symbol) do |row|
-        next if season != row[:season]
-        game_count += 1
-        total_goals += row[:home_goals].to_i
-        total_goals += row[:away_goals].to_i
-      end
+  #     CSV.foreach(games, headers: true, header_converters: :symbol) do |row|
+  #       next if season != row[:season]
+  #       game_count += 1
+  #       total_goals += row[:home_goals].to_i
+  #       total_goals += row[:away_goals].to_i
+  #     end
   
-      avg = (total_goals.to_f / game_count).round(2)
-      season_avgs[season] = avg
-    end
-    season_avgs
-  end
+  #     avg = (total_goals.to_f / game_count).round(2)
+  #     season_avgs[season] = avg
+  #   end
+  #   season_avgs
+  # end
 
   def count_of_teams
     teams_count = CSV.read(teams, headers: true)
