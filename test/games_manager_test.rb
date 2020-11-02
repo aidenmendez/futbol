@@ -35,4 +35,16 @@ class GamesManagerTest < Minitest::Test
   def test_average_goals_per_game
     assert_equal 3.95, @games_manager.average_goals_per_game
   end
+
+  def test_average_goals_by_season
+    hash = {
+      "20122013" => 3.86,
+      "20132014" => 4.33,
+      "20142015" => 4.00,
+      "20152016" => 3.88,
+      "20162017" => 4.75
+    }
+    
+    assert_equal hash, @games_manager.average_goals_by_season
+  end
 end
