@@ -64,4 +64,9 @@ class GameTeamsManagerTest < Minitest::Test
     # Still not sure of what assertion should be, but running and returning
     assert_equal 0.60, @game_teams_manager.percentage_visitor_wins
   end
+
+  def test_percentage_ties
+    # Still not sure of what assertion should be, but running and returning
+    assert_equal 0.60, @game_teams_manager.percentage_ties
+  end
 end
