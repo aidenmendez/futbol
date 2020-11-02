@@ -41,4 +41,11 @@ class GamesManager
     end
     season_games
   end
+
+  def average_goals_per_game
+    total_goals = games.reduce(0) do |sum, game|
+      sum + game.total_score
+    end
+    total_goals.to_f / (games.count)
+  end
 end
