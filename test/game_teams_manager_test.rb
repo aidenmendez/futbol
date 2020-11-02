@@ -51,7 +51,17 @@ class GameTeamsManagerTest < Minitest::Test
     assert_equal "Ted Nolan", @game_teams_manager.worst_coach("20142015")
   end
 
+  def test_total_games
+    assert_equal 7441, @game_teams_manager.total_games
+  end
+
   def test_percentage_home_wins
-    assert_equal 59.85, @games_manager.percentage_home_wins
+    # Still not sure of what assertion should be, but running and returning
+    assert_equal 0.60, @game_teams_manager.percentage_home_wins
+  end
+
+  def test_percentage_visitor_wins
+    # Still not sure of what assertion should be, but running and returning
+    assert_equal 0.60, @game_teams_manager.percentage_visitor_wins
   end
 end
