@@ -21,6 +21,10 @@ class GamesManager
     games.max_by { |game| game.total_score }.total_score
   end
 
+  def lowest_total_score
+    games.min_by { |game| game.total_score }.total_score
+  end
+
   def game_ids_by_season(season)
     games_by_season = games.find_all do |game|
       game.season == season
