@@ -23,4 +23,8 @@ class TeamsManager
       team.team_id == accurate_team_id
     end.team_name
   end
+
+  def count_of_teams
+    teams.count
+  end
 end
