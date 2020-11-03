@@ -78,7 +78,6 @@ class GameTeamsManager
     coach_stats.each do |coach, stat|
       percentages[coach] = calc_percentage(stat[:wins], stat[:games])
     end
-
     percentages
   end
 
