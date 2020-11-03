@@ -8,8 +8,8 @@ require_relative './manager/teams_manager'
 require_relative './manager/games_manager'
 
 class StatTracker
-  attr_reader :games_path, 
-              :game_teams_path, 
+  attr_reader :games_path,
+              :game_teams_path,
               :teams_path,
               :game_teams_manager,
               :games_manager,
@@ -18,7 +18,7 @@ class StatTracker
   def self.from_csv(locations)
     new(locations)
   end
-  
+
   def initialize(locations)
     @games_path = locations[:games]
     @game_teams_path = locations[:game_teams]

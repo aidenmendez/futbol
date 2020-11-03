@@ -11,7 +11,7 @@ class GameTeamsManagerTest < Minitest::Test
     @game_teams_manager = @controller.game_teams_manager
   end
 
-  def test_it_exists	
+  def test_it_exists
     assert_instance_of GameTeamsManager, @game_teams_manager
   end
 
@@ -23,7 +23,7 @@ class GameTeamsManagerTest < Minitest::Test
     coach_hash = {
       "Joel Quenneville" => {:games => 0, :wins => 0},
       "Jon Cooper" => {:games => 0, :wins => 0}
-    } 
+    }
     season_game_teams = []
     parent = nil
     game_1 = GameTeam.new({ game_id: "2014030411", goals: 2, head_coach: "Joel Quenneville", hoa: "away", result: "WIN", settled_in: "REG", shots: 5, tackles: 21, team_id: "16" }, parent)
@@ -44,6 +44,16 @@ class GameTeamsManagerTest < Minitest::Test
 
     assert_equal [game_1, game_2], @game_teams_manager.game_team_by_season("20142015")
   end
+  # def test_game_team_by_season_zzz
+  #   game_1 = GameTeam.new({ game_id: "2014030411", goals: 2, head_coach: "Joel Quenneville", hoa: "away", result: "WIN", settled_in: "REG", shots: 5, tackles: 21, team_id: "16" }, @game_teams_manager.itself)
+  #   game_2 = GameTeam.new({ game_id: "2014030411", goals: 1, head_coach: "Jon Cooper", hoa: "home", result: "LOSS", settled_in: "REG", shots: 5, tackles: 29, team_id: "14" }, @game_teams_manager.itself)
+  #   game_3 = GameTeam.new({ game_id: "2014034363", goals: 1, head_coach: "Jon Cooper", hoa: "home", result: "LOSS", settled_in: "REG", shots: 5, tackles: 29, team_id: "14" }, @game_teams_manager.itself)
+  #   season_game_teams = [game_1.game_id, game_2.game_id]
+  #
+  #   @game_teams_manager.expects(:game_ids_by_season).returns(season_game_teams)
+  #
+  #   assert_equal [game_1, game_2], @game_teams_manager.game_team_by_season("20142015")
+  # end
 
   def test_game_ids_by_season
 
@@ -89,7 +99,7 @@ class GameTeamsManagerTest < Minitest::Test
   end
 
   def test_most_tackles
-    assert_equal "FC Cincinnati", @game_teams_manager.most_tackles("20132014")  
+    assert_equal "FC Cincinnati", @game_teams_manager.most_tackles("20132014")
   end
 
   def test_fewest_tackles
@@ -106,5 +116,14 @@ class GameTeamsManagerTest < Minitest::Test
 
   def test_can_retrieve_fewest_number_of_goals_from_single_game
     assert_equal 0, @game_teams_manager.fewest_goals_scored("6")
+  end
+end
+#check assertion-- may be fixture file assertion
+  def test_team_with_best_offense
+    assert_equal "New York City FC", @game_teams_manager.best_offense
+  end
+
+  def test_team_with_worst_offense
+    assert_equal "DC United", @game_teams_manager.worst_offense
   end
 end

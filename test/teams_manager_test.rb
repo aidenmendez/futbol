@@ -19,4 +19,8 @@ class TeamsManagerTest < Minitest::Test
     expected = {"team_id"=>"6", "franchise_id"=>"6", "team_name"=>"FC Dallas", "abbreviation"=>"DAL", "link"=>"/api/v1/teams/6"}
     assert_equal expected, @teams_manager.team_info("6")
   end
+
+  def test_count_of_teams
+    assert_equal 32, @teams_manager.count_of_teams
+  end
 end
