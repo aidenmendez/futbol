@@ -12,8 +12,6 @@ class StatTrackerTest < MiniTest::Test
     @stat_tracker = StatTracker.from_csv(locations)
   end
 
-# League Statistics Methods
-
   def test_winningest_coach
     assert_equal "Barry Trotz", @stat_tracker.winningest_coach(20152016)
   end
@@ -38,8 +36,6 @@ class StatTrackerTest < MiniTest::Test
     assert_equal "Montreal Impact", @stat_tracker.fewest_tackles(20152016)
   end
 
-  #below assertions are not using fixture files
-  #team statistics
   def test_can_retrieve_team_info
     expected = {"team_id"=>"6", "franchise_id"=>"6", "team_name"=>"FC Dallas", "abbreviation"=>"DAL", "link"=>"/api/v1/teams/6"}
     assert_equal expected, @stat_tracker.team_info("6")
@@ -96,5 +92,50 @@ class StatTrackerTest < MiniTest::Test
             }
 
     assert_equal goals, @stat_tracker.average_goals_by_season
+  end
+
+  def test_percentage_home_wins
+    assert_equal 0.44, @stat_tracker.percentage_home_wins
+  end
+
+  def test_percentage_visitor_wins
+    assert_equal 0.36, @stat_tracker.percentage_visitor_wins
+  end
+
+  def test_percentage_ties
+    assert_equal 0.2, @stat_tracker.percentage_ties
+  end
+
+  def test_count_of_teams
+    assert_equal 32, @stat_tracker.count_of_teams
+  end
+
+  def test_team_with_best_offense
+    assert_equal "Reign FC", @stat_tracker.best_offense
+  end
+
+  def test_team_with_worst_offense
+    assert_equal "Utah Royals FC", @stat_tracker.worst_offense
+  end
+
+  def test_highest_scoring_visitor
+    assert_equal "FC Dallas", @stat_tracker.highest_scoring_visitor
+  end
+
+  def test_highest_scoring_home_team
+    assert_equal "Reign FC", @stat_tracker.highest_scoring_home_team
+  end
+
+  def test_lowest_scoring_visitor
+    assert_equal "San Jose Earthquakes", @stat_tracker.lowest_scoring_visitor
+  end
+
+  def test_lowest_scoring_home_team
+    assert_equal "Utah Royals FC", @stat_tracker.lowest_scoring_home_team
+  end
+
+  def test_count_of_games_by_season
+    hash = {"20122013"=>806, "20162017"=>1317, "20142015"=>1319, "20152016"=>1321, "20132014"=>1323, "20172018"=>1355}
+    assert_equal hash, @stat_tracker.count_of_games_by_season
   end
 end

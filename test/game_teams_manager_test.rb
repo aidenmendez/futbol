@@ -95,17 +95,14 @@ class GameTeamsManagerTest < Minitest::Test
   end
 
   def test_percentage_home_wins
-    # Still not sure of what assertion should be, but running and returning
     assert_equal 0.44, @game_teams_manager.percentage_home_wins
   end
 
   def test_percentage_visitor_wins
-    # Still not sure of what assertion should be, but running and returning
     assert_equal 0.36, @game_teams_manager.percentage_visitor_wins
   end
 
   def test_percentage_ties
-    # Still not sure of what assertion should be, but running and returning
     assert_equal 0.2, @game_teams_manager.percentage_ties
   end
 
@@ -132,7 +129,7 @@ class GameTeamsManagerTest < Minitest::Test
   def test_can_retrieve_fewest_number_of_goals_from_single_game
     assert_equal 0, @game_teams_manager.fewest_goals_scored("6")
   end
-#check assertion-- may be fixture file assertion
+  
   def test_team_with_best_offense
     assert_equal "Reign FC", @game_teams_manager.best_offense
   end
