@@ -184,6 +184,54 @@ class GameTeamsManager
     team_name = parent.get_team_name(tackles_team_id)
   end
 
+  def average_win_percentage(team_id)
+    total_win = 0
+    total_game = 0
+    @game_teams.each do |game_team|
+      if game_team.team_id == team_id
+        if game_team.result == "WIN"
+          total_win += 1
+        end
+        total_game += 1
+      end
+    end
+    (total_win.to_f / total_game).round(2)
+  end
+
+  def most_goals_scored(team_id)
+    most_goals = 0
+    @game_teams.each do |game_team|
+      if game_team.team_id == team_id
+        most_goals = game_team.goals if most_goals < game_team.goals
+      end
+    end
+    most_goals
+  end
+
+  def fewest_goals_scored(team_id)
+    least_goals = 0
+    @game_teams.each do |game_team|
+      if game_team.team_id == team_id
+        least_goals = game_team.goals if least_goals > game_team.goals
+      end
+    end
+    least_goals
+  end
+  
+  
+  # def count_team_games(team_id)
+  #   hash = {}
+  #   game_teams.each do |game_team|
+  #     next if game_team[team_id] != team_id
+  #     hash[game_team.game_id] = {:win => false} 
+  #     if game_team[:result] == "WIN"
+  #       hash[game_team.game_id][:win] = true
+  #     end
+
+  #     hash
+  #   end
+  # end
+end
   def best_offense
     team_stats = {}
     game_teams.each do |game_team|

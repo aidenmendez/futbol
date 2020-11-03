@@ -3,27 +3,19 @@ require_relative './test_helper'
 class GameTeamTest < Minitest::Test
 
   def setup
-    # row = {
-    #   game_id: "2012030111",
-    #   team_id: "2",
-    #   hoa: "away",
-    #   result: "LOSS",
-    #   settled_in: "REG",
-    #   head_coach: "Jack Capuano",
-    #   goals: "3",
-    #   shots: "6",
-    #   tackles: "36"
-    #   }
-    # parent = nil
-    # @game_team = GameTeam.new(row, parent)
-    locations = {
-      games: './data/fixture_files/games.csv',
-      teams: './data/fixture_files/teams.csv',
-      game_teams: './data/fixture_files/game_teams.csv'
-    }
-
-    @stat_tracker = StatTracker.from_csv(locations)
-    @game_team = stat_tracker.game_team
+    row = {
+      game_id: "2012030111",
+      team_id: "2",
+      hoa: "away",
+      result: "LOSS",
+      settled_in: "REG",
+      head_coach: "Jack Capuano",
+      goals: "3",
+      shots: "6",
+      tackles: "36"
+      }
+    parent = nil
+    @game_team = GameTeam.new(row, parent)
   end
 
   def test_it_exists_and_has_attributes

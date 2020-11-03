@@ -24,6 +24,19 @@ class TeamsManager
     end.team_name
   end
 
+  def team_info(team_id)
+    @teams.each_with_object({}) do |team, breakdown|
+      if team.team_id == team_id
+        breakdown["team_id"] = team.team_id
+        breakdown["franchise_id"] = team.franchise_id
+        breakdown["team_name"] = team.team_name
+        breakdown["abbreviation"] = team.abbreviation
+        breakdown["link"] = team.link
+      end
+    end
+  end
+end
+
   def count_of_teams
     teams.count
   end

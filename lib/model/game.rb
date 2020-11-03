@@ -27,4 +27,20 @@ class Game
   def total_score
     away_goals + home_goals
   end
+
+  # def home_win
+  #   home_goals > away_goals
+  # end
+
+  # def away_win
+  #   away_goals > home_goals
+  # end
+
+  # def winning_team
+  #   if home_win
+  #     home_team_id
+  #   elsif away_win
+  #     away_team_id
+  #   end
+  # end
 end

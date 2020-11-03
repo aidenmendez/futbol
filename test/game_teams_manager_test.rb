@@ -7,8 +7,8 @@ class GameTeamsManagerTest < Minitest::Test
       teams: './data/teams.csv',
       game_teams: './data/game_teams.csv'
     }
-    controller = StatTracker.from_csv(locations)
-    @game_teams_manager = controller.game_teams_manager
+    @controller = StatTracker.from_csv(locations)
+    @game_teams_manager = @controller.game_teams_manager
   end
 
   def test_it_exists
@@ -33,6 +33,17 @@ class GameTeamsManagerTest < Minitest::Test
     assert_equal coach_hash, @game_teams_manager.coaches_by_season("20152016", season_game_teams)
   end
 
+  def test_game_team_by_season_zzz
+    parent = nil
+    game_1 = GameTeam.new({ game_id: "2014030411", goals: 2, head_coach: "Joel Quenneville", hoa: "away", result: "WIN", settled_in: "REG", shots: 5, tackles: 21, team_id: "16" }, parent)
+    game_2 = GameTeam.new({ game_id: "2014030411", goals: 1, head_coach: "Jon Cooper", hoa: "home", result: "LOSS", settled_in: "REG", shots: 5, tackles: 29, team_id: "14" }, parent)
+    game_3 = GameTeam.new({ game_id: "2014034363", goals: 1, head_coach: "Jon Cooper", hoa: "home", result: "LOSS", settled_in: "REG", shots: 5, tackles: 29, team_id: "14" }, parent)
+    season_game_teams = [game_1.game_id, game_2.game_id]
+
+    @game_teams_manager.expects(:game_ids_by_season).returns(season_game_teams)
+
+    assert_equal [game_1, game_2], @game_teams_manager.game_team_by_season("20142015")
+  end
   # def test_game_team_by_season_zzz
   #   game_1 = GameTeam.new({ game_id: "2014030411", goals: 2, head_coach: "Joel Quenneville", hoa: "away", result: "WIN", settled_in: "REG", shots: 5, tackles: 21, team_id: "16" }, @game_teams_manager.itself)
   #   game_2 = GameTeam.new({ game_id: "2014030411", goals: 1, head_coach: "Jon Cooper", hoa: "home", result: "LOSS", settled_in: "REG", shots: 5, tackles: 29, team_id: "14" }, @game_teams_manager.itself)
@@ -94,6 +105,19 @@ class GameTeamsManagerTest < Minitest::Test
   def test_fewest_tackles
     assert_equal "Atlanta United", @game_teams_manager.fewest_tackles("20132014")
   end
+
+  def test_can_retrieve_average_win_percetange_for_all_games_for_a_team
+    assert_equal 1.00, @game_teams_manager.average_win_percentage("6")
+  end
+
+  def test_can_retrieve_highest_number_of_goals_from_single_game
+    assert_equal 4, @game_teams_manager.most_goals_scored("6")
+  end
+
+  def test_can_retrieve_fewest_number_of_goals_from_single_game
+    assert_equal 0, @game_teams_manager.fewest_goals_scored("6")
+  end
+end
 #check assertion-- may be fixture file assertion
   def test_team_with_best_offense
     assert_equal "New York City FC", @game_teams_manager.best_offense
