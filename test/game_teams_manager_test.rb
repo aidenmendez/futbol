@@ -60,7 +60,19 @@ class GameTeamsManagerTest < Minitest::Test
   end
 
   def test_get_stats
-
+    parent = mock("parent")
+    game_1 = GameTeam.new({ game_id: "2014030411", goals: 2, head_coach: "Joel Quenneville", hoa: "away", result: "WIN", settled_in: "REG", shots: 5, tackles: 21, team_id: "16" }, parent)
+    game_2 = GameTeam.new({ game_id: "2014030411", goals: 1, head_coach: "Jon Cooper", hoa: "home", result: "LOSS", settled_in: "REG", shots: 5, tackles: 29, team_id: "14" }, parent)
+    game_3 = GameTeam.new({ game_id: "2014034363", goals: 1, head_coach: "Jon Cooper", hoa: "home", result: "LOSS", settled_in: "REG", shots: 5, tackles: 29, team_id: "14" }, parent)
+    season_game_teams = [game_1, game_2, game_3]
+    season = mock("season")
+    coaches = {"Joel Quenneville" => {games: 0, wins: 0},
+              "Jon Cooper" => {games: 0, wins: 0}
+              }
+    expected = {"Joel Quenneville" => {games: 1, wins: 1},
+    "Jon Cooper" => {games: 2, wins: 0}
+    }
+    assert_equal expected, @game_teams_manager.get_stats(coaches, season, season_game_teams)
   end
 
   def test_calc_coach_percentage
@@ -117,7 +129,6 @@ class GameTeamsManagerTest < Minitest::Test
   def test_can_retrieve_fewest_number_of_goals_from_single_game
     assert_equal 0, @game_teams_manager.fewest_goals_scored("6")
   end
-end
 #check assertion-- may be fixture file assertion
   def test_team_with_best_offense
     assert_equal "New York City FC", @game_teams_manager.best_offense
