@@ -27,7 +27,6 @@ class GameTeamsManager
   end
 
   def coach_count(season, status)
-    season = season.to_s
     season_game_teams = game_team_by_season(season)
     coaches = coaches_by_season(season, season_game_teams)
     coach_stats = get_stats(coaches, season, season_game_teams)
@@ -122,7 +121,6 @@ class GameTeamsManager
   end
 
   def accurate_team(season, status)
-    season = season.to_s
     seasonal_games = game_team_by_season(season)
     team_stats = get_game_stats(season, seasonal_games)
 
@@ -166,7 +164,6 @@ class GameTeamsManager
   end
 
   def tackles(season, status)
-    season = season.to_s
     seasonal_games = game_team_by_season(season)
     team_stats = get_game_stats(season, seasonal_games)
 
