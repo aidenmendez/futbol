@@ -54,4 +54,8 @@ class GamesManagerTest < Minitest::Test
   def test_highest_scoring_visitor
     assert_equal "FC Dallas", @games_manager.highest_scoring_visitor
   end
+
+  def test_highest_scoring_home_team
+    assert_equal "New York City FC", @games_manager.highest_scoring_home_team
+  end
 end
