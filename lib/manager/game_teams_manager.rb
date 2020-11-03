@@ -85,17 +85,17 @@ class GameTeamsManager
   def total_games
     game_teams.count / 2
   end
-  
-  def percentage_home_wins 
-    home_wins = 0 
+
+  def percentage_home_wins
+    home_wins = 0
     game_teams.each do |game_team|
       home_wins += 1 if game_team.result == "WIN" && game_team.hoa == "home"
     end
     calc_percentage(home_wins, total_games)
   end
 
-  def percentage_visitor_wins 
-    visitor_wins = 0 
+  def percentage_visitor_wins
+    visitor_wins = 0
     game_teams.each do |game_team|
       visitor_wins += 1 if game_team.result == "WIN" && game_team.hoa == "away"
     end
@@ -121,7 +121,7 @@ class GameTeamsManager
   def least_accurate_team(season)
     accurate_team(season, "least")
   end
-  
+
   def accurate_team(season, status)
     season = season.to_s
     seasonal_games = game_team_by_season(season)
@@ -151,7 +151,7 @@ class GameTeamsManager
         }
       else
         team_stats[seasonal_game.team_id][:shots] += seasonal_game.shots
-        team_stats[seasonal_game.team_id][:goals] += seasonal_game.goals    
+        team_stats[seasonal_game.team_id][:goals] += seasonal_game.goals
         team_stats[seasonal_game.team_id][:tackles] += seasonal_game.tackles
       end
     end
@@ -165,7 +165,7 @@ class GameTeamsManager
   def fewest_tackles(season)
     tackles(season, "fewest")
   end
-  
+
   def tackles(season, status)
     season = season.to_s
     seasonal_games = game_team_by_season(season)
@@ -180,7 +180,39 @@ class GameTeamsManager
         stats[:tackles]
       end[0]
     end
-    
+
     team_name = parent.get_team_name(tackles_team_id)
+  end
+
+  def best_offense
+    team_stats = {}
+    game_teams.each do |game_team|
+      if team_stats[game_team.game_id]
+        team_stats[game_team.game_id][:total_goals] += game_team.goals
+        team_stats[game_team.team_id][:total_games] += 1
+      else
+        team_stats[game_team.team_id] = {total_games: 1, total_goals: game_team.goals}
+      end
+    end
+    top_offense_team = team_stats.max_by do |team, stats|
+      stats[:total_goals].to_f / stats[:total_games]
+    end[0]
+    parent.get_team_name(top_offense_team)
+  end
+
+  def worst_offense
+    team_stats = {}
+    game_teams.each do |game_team|
+      if team_stats[game_team.game_id]
+        team_stats[game_team.game_id][:total_goals] += game_team.goals
+        team_stats[game_team.team_id][:total_games] += 1
+      else
+        team_stats[game_team.team_id] = {total_games: 1, total_goals: game_team.goals}
+      end
+    end
+    worst_offense_team = team_stats.min_by do |team, stats|
+      stats[:total_goals].to_f / stats[:total_games]
+    end[0]
+    parent.get_team_name(worst_offense_team)
   end
 end

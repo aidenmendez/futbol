@@ -2,15 +2,18 @@ require_relative './test_helper'
 
 class GamesManagerTest < Minitest::Test
   def setup
-    location = './data/fixture_files/games.csv'
-    parent = nil
-    @games_manager = GamesManager.get_data(location, parent)
+    locations = {
+      games: './data/games.csv',
+      teams: './data/teams.csv',
+      game_teams: './data/game_teams.csv'
+    }
+    controller = StatTracker.from_csv(locations)
+    @games_manager = controller.games_manager
   end
 
-  def test_it_exists_and_has_attributes	
-    assert_instance_of GamesManager, @games_manager 
-    assert_equal 100, @games_manager.games.length
-    assert_nil @games_manager.parent
+  def test_it_exists_and_has_attributes
+    assert_instance_of GamesManager, @games_manager
+    assert_equal 7441, @games_manager.games.length
   end
 
   def test_highest_total_score
@@ -44,7 +47,23 @@ class GamesManagerTest < Minitest::Test
       "20152016" => 3.88,
       "20162017" => 4.75
     }
-    
+
     assert_equal hash, @games_manager.average_goals_by_season
+  end
+
+  def test_highest_scoring_visitor
+    assert_equal "FC Dallas", @games_manager.highest_scoring_visitor
+  end
+
+  def test_highest_scoring_home_team
+    assert_equal "New York City FC", @games_manager.highest_scoring_home_team
+  end
+
+  def test_lowest_scoring_visitor
+    assert_equal "Seattle Sounders FC", @games_manager.lowest_scoring_visitor
+  end
+
+  def test_lowest_scoring_home_team
+    assert_equal "Chicago Fire", @games_manager.lowest_scoring_home_team
   end
 end
