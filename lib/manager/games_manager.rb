@@ -137,19 +137,23 @@ class GamesManager
   def best_season(team_id)
     seasons = {}
     @games.each do |game|
-      if seasons[game.season]
-        seasons[game.season][:total_games] += 1
-        seasons[game.season][:total_home_wins] += 1 if game.home_goals > game.away_goals
-      else
-        seasons[game.season] = { total_games: 1, 
-                                 total_home_wins: 1,
-                                 total_away_wins: 0 }
+      if game.home_team_id == team_id
+        if seasons[game.season]
+          seasons[game.season][:total_games] += 1
+          seasons[game.season][:total_home_wins] += 1 if game.home_goals > game.away_goals
+        else
+          seasons[game.season] = { total_games: 1, 
+                                  total_home_wins: 1,
+                                  total_away_wins: 0 }
+        end
       end
     end
     @games.each do |game|
-      if seasons[game.season]
-        seasons[game.season][:total_games] += 1
-        seasons[game.season][:total_away_wins] += 1 if game.home_goals < game.away_goals
+      if game.away_team_id == team_id
+        if seasons[game.season]
+          seasons[game.season][:total_games] += 1
+          seasons[game.season][:total_away_wins] += 1 if game.home_goals < game.away_goals
+        end
       end
     end
       best_win_rate = seasons.max_by do |season, stats|
@@ -173,9 +177,11 @@ class GamesManager
       end
     end
     @games.each do |game|
-      if seasons[game.season]
-        seasons[game.season][:total_games] += 1
-        seasons[game.season][:total_away_wins] += 1 if game.home_goals < game.away_goals
+      if game.away_team_id == team_id
+        if seasons[game.season]
+          seasons[game.season][:total_games] += 1
+          seasons[game.season][:total_away_wins] += 1 if game.home_goals < game.away_goals
+        end
       end
     end
       worst_win_rate = seasons.min_by do |season, stats|

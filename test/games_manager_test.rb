@@ -70,7 +70,7 @@ class GamesManagerTest < Minitest::Test
   def test_can_check_rival
     assert_equal "Houston Dynamo", @games_manager.rival("6")
   end
-end
+
   def test_highest_scoring_visitor
     assert_equal "FC Dallas", @games_manager.highest_scoring_visitor
   end
