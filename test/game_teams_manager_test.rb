@@ -33,27 +33,17 @@ class GameTeamsManagerTest < Minitest::Test
     assert_equal coach_hash, @game_teams_manager.coaches_by_season("20152016", season_game_teams)
   end
 
-  def test_game_team_by_season_zzz
-    parent = nil
+  def test_game_team_by_season
+    parent = mock("Parent")
     game_1 = GameTeam.new({ game_id: "2014030411", goals: 2, head_coach: "Joel Quenneville", hoa: "away", result: "WIN", settled_in: "REG", shots: 5, tackles: 21, team_id: "16" }, parent)
     game_2 = GameTeam.new({ game_id: "2014030411", goals: 1, head_coach: "Jon Cooper", hoa: "home", result: "LOSS", settled_in: "REG", shots: 5, tackles: 29, team_id: "14" }, parent)
     game_3 = GameTeam.new({ game_id: "2014034363", goals: 1, head_coach: "Jon Cooper", hoa: "home", result: "LOSS", settled_in: "REG", shots: 5, tackles: 29, team_id: "14" }, parent)
     season_game_teams = [game_1.game_id, game_2.game_id]
-
+    @game_teams_manager.stubs(:game_teams).returns([game_1, game_2, game_3])
     @game_teams_manager.expects(:game_ids_by_season).returns(season_game_teams)
 
     assert_equal [game_1, game_2], @game_teams_manager.game_team_by_season("20142015")
   end
-  # def test_game_team_by_season_zzz
-  #   game_1 = GameTeam.new({ game_id: "2014030411", goals: 2, head_coach: "Joel Quenneville", hoa: "away", result: "WIN", settled_in: "REG", shots: 5, tackles: 21, team_id: "16" }, @game_teams_manager.itself)
-  #   game_2 = GameTeam.new({ game_id: "2014030411", goals: 1, head_coach: "Jon Cooper", hoa: "home", result: "LOSS", settled_in: "REG", shots: 5, tackles: 29, team_id: "14" }, @game_teams_manager.itself)
-  #   game_3 = GameTeam.new({ game_id: "2014034363", goals: 1, head_coach: "Jon Cooper", hoa: "home", result: "LOSS", settled_in: "REG", shots: 5, tackles: 29, team_id: "14" }, @game_teams_manager.itself)
-  #   season_game_teams = [game_1.game_id, game_2.game_id]
-  #
-  #   @game_teams_manager.expects(:game_ids_by_season).returns(season_game_teams)
-  #
-  #   assert_equal [game_1, game_2], @game_teams_manager.game_team_by_season("20142015")
-  # end
 
   def test_game_ids_by_season
     parent = nil
@@ -77,18 +67,23 @@ class GameTeamsManagerTest < Minitest::Test
     coaches = {"Joel Quenneville" => {games: 0, wins: 0},
               "Jon Cooper" => {games: 0, wins: 0}
               }
+    
     expected = {"Joel Quenneville" => {games: 1, wins: 1},
-    "Jon Cooper" => {games: 2, wins: 0}
-    }
+                "Jon Cooper" => {games: 2, wins: 0}
+                }
     assert_equal expected, @game_teams_manager.get_stats(coaches, season, season_game_teams)
   end
 
   def test_calc_coach_percentage
-
+    coach_stats = {"Harry Potter" => {wins: 5, games: 10},
+                  "Hairy Potter" => {wins: 7, games: 10} }
+    
+    expected = {"Harry Potter" => 0.5, "Hairy Potter" => 0.7}
+    assert_equal expected, @game_teams_manager.calc_coach_percentage(coach_stats)
   end
 
   def test_calc_percentage
-
+    assert_equal 0.33, @game_teams_manager.calc_percentage(1, 3)
   end
 
   def test_worst_coach
