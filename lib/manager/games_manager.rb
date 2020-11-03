@@ -76,11 +76,11 @@ class GamesManager
         team_stats[game.away_team_id] = {total_away_games: 1, total_away_goals: game.away_goals}
       end
     end
-    highest_scoring_away_team = team_stats.max_by do |team, stats|
+    highest_scoring_away_team_id = team_stats.max_by do |team, stats|
       stats[:total_away_goals].to_f / stats[:total_away_games]
     end[0]
 
-    parent.get_team_name(highest_scoring_away_team)
+    parent.get_team_name(highest_scoring_away_team_id)
   end
 
   def highest_scoring_home_team
@@ -93,11 +93,11 @@ class GamesManager
         team_stats[game.home_team_id] = {total_home_games: 1, total_home_goals: game.home_goals}
       end
     end
-    highest_scoring_home_team = team_stats.max_by do |team, stats|
+    highest_scoring_home_team_id = team_stats.max_by do |team, stats|
       stats[:total_home_goals].to_f / stats[:total_home_games]
     end[0]
 
-    parent.get_team_name(highest_scoring_home_team)
+    parent.get_team_name(highest_scoring_home_team_id)
   end
 
   def lowest_scoring_visitor
@@ -110,11 +110,27 @@ class GamesManager
         team_stats[game.away_team_id] = {total_away_games: 1, total_away_goals: game.away_goals}
       end
     end
-    lowest_scoring_away_team = team_stats.min_by do |team, stats|
+    lowest_scoring_away_team_id = team_stats.min_by do |team, stats|
       stats[:total_away_goals].to_f / stats[:total_away_games]
     end[0]
 
-    parent.get_team_name(lowest_scoring_away_team)
+    parent.get_team_name(lowest_scoring_away_team_id)
   end
 
+  def lowest_scoring_home_team
+    team_stats = {}
+    games.each do |game|
+      if team_stats[game.home_team_id]
+        team_stats[game.home_team_id][:total_home_goals] += game.home_goals
+        team_stats[game.home_team_id][:total_home_games] += 1
+      else
+        team_stats[game.home_team_id] = {total_home_games: 1, total_home_goals: game.home_goals}
+      end
+    end
+    lowest_scoring_home_team_id = team_stats.min_by do |team, stats|
+      stats[:total_home_goals].to_f / stats[:total_home_games]
+    end[0]
+
+    parent.get_team_name(lowest_scoring_home_team_id)
+  end
 end
