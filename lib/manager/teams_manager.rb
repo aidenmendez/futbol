@@ -35,7 +35,6 @@ class TeamsManager
       end
     end
   end
-end
 
   def count_of_teams
     teams.count

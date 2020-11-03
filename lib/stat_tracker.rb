@@ -148,4 +148,8 @@ class StatTracker
   def lowest_scoring_home_team
     @games_manager.lowest_scoring_home_team
   end
+
+  def count_of_games_by_season
+    @games_manager.count_of_games_by_season
+  end
 end

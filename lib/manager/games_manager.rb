@@ -46,7 +46,7 @@ class GamesManager
     total_goals = games.reduce(0) do |sum, game|
       sum + game.total_score
     end
-    total_goals.to_f / (games.count)
+    (total_goals.to_f / (games.count)).round(2)
   end
 
   def average_goals_by_season
@@ -132,5 +132,111 @@ class GamesManager
     end[0]
 
     parent.get_team_name(lowest_scoring_home_team_id)
+  end
+
+  def best_season(team_id)
+    seasons = {}
+    @games.each do |game|
+      if seasons[game.season]
+        seasons[game.season][:total_games] += 1
+        seasons[game.season][:total_home_wins] += 1 if game.home_goals > game.away_goals
+      else
+        seasons[game.season] = { total_games: 1, 
+                                 total_home_wins: 1,
+                                 total_away_wins: 0 }
+      end
+    end
+    @games.each do |game|
+      if seasons[game.season]
+        seasons[game.season][:total_games] += 1
+        seasons[game.season][:total_away_wins] += 1 if game.home_goals < game.away_goals
+      end
+    end
+      best_win_rate = seasons.max_by do |season, stats|
+        ((stats[:total_home_wins] + stats[:total_away_wins]).to_f * 100 / stats[:total_games]).round(2)
+      end
+      best_win_rate[0]
+  end
+
+  def worst_season(team_id)
+    seasons = {}
+    @games.each do |game|
+      if game.home_team_id == team_id
+        if seasons[game.season]
+          seasons[game.season][:total_games] += 1
+          seasons[game.season][:total_home_wins] += 1 if game.home_goals > game.away_goals
+        else
+          seasons[game.season] = { total_games: 1, 
+                                    total_home_wins: 1,
+                                    total_away_wins: 0 }
+        end
+      end
+    end
+    @games.each do |game|
+      if seasons[game.season]
+        seasons[game.season][:total_games] += 1
+        seasons[game.season][:total_away_wins] += 1 if game.home_goals < game.away_goals
+      end
+    end
+      worst_win_rate = seasons.min_by do |season, stats|
+        ((stats[:total_home_wins] + stats[:total_away_wins]).to_f * 100 / stats[:total_games]).round(2)
+      end
+      worst_win_rate[0]
+    end
+
+  def favorite_opponent(team_id)
+    favorite_opponents = {}
+    @games.each do |game|
+      if game.home_team_id == team_id
+        if favorite_opponents[game.away_team_id]
+          favorite_opponents[game.away_team_id][:total_games] += 1
+          favorite_opponents[game.away_team_id][:total_home_wins] += 1 if game.home_goals > game.away_goals
+        else
+          favorite_opponents[game.away_team_id] = { total_games: 1, 
+                                                    total_home_wins: 1, 
+                                                    total_away_wins: 0}
+        end
+      end
+    end
+    @games.each do |game|
+      if game.away_team_id == team_id
+        if favorite_opponents[game.home_team_id]
+          favorite_opponents[game.home_team_id][:total_games] += 1
+          favorite_opponents[game.home_team_id][:total_away_wins] += 1 if game.away_goals > game.home_goals
+        end
+      end
+    end
+    best_win_rate = favorite_opponents.max_by do |opponent, stats|
+      ((stats[:total_home_wins] + stats[:total_away_wins]).to_f * 100 / stats[:total_games]).round(2)
+    end[0]
+      @parent.get_team_name(best_win_rate)      
+  end
+
+  def rival(team_id)
+    favorite_opponents = {}
+    @games.each do |game|
+      if game.home_team_id == team_id
+        if favorite_opponents[game.away_team_id]
+          favorite_opponents[game.away_team_id][:total_games] += 1
+          favorite_opponents[game.away_team_id][:total_home_wins] += 1 if game.home_goals > game.away_goals
+        else
+          favorite_opponents[game.away_team_id] = { total_games: 1, 
+                                                    total_home_wins: 1, 
+                                                    total_away_wins: 0}
+        end
+      end
+    end
+    @games.each do |game|
+      if game.away_team_id == team_id
+        if favorite_opponents[game.home_team_id]
+          favorite_opponents[game.home_team_id][:total_games] += 1
+          favorite_opponents[game.home_team_id][:total_away_wins] += 1 if game.away_goals > game.home_goals
+        end
+      end
+    end
+    best_win_rate = favorite_opponents.min_by do |opponent, stats|
+      ((stats[:total_home_wins] + stats[:total_away_wins]).to_f * 100 / stats[:total_games]).round(2)
+    end[0]
+      @parent.get_team_name(best_win_rate)    
   end
 end
