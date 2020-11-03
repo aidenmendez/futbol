@@ -234,8 +234,8 @@ class GameTeamsManager
   def best_offense
     team_stats = {}
     game_teams.each do |game_team|
-      if team_stats[game_team.game_id]
-        team_stats[game_team.game_id][:total_goals] += game_team.goals
+      if team_stats[game_team.team_id]
+        team_stats[game_team.team_id][:total_goals] += game_team.goals
         team_stats[game_team.team_id][:total_games] += 1
       else
         team_stats[game_team.team_id] = {total_games: 1, total_goals: game_team.goals}
@@ -250,8 +250,8 @@ class GameTeamsManager
   def worst_offense
     team_stats = {}
     game_teams.each do |game_team|
-      if team_stats[game_team.game_id]
-        team_stats[game_team.game_id][:total_goals] += game_team.goals
+      if team_stats[game_team.team_id]
+        team_stats[game_team.team_id][:total_goals] += game_team.goals
         team_stats[game_team.team_id][:total_games] += 1
       else
         team_stats[game_team.team_id] = {total_games: 1, total_goals: game_team.goals}
