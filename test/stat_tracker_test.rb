@@ -13,27 +13,27 @@ class StatTrackerTest < MiniTest::Test
   end
 
   def test_winningest_coach
-    assert_equal "Barry Trotz", @stat_tracker.winningest_coach(20152016)
+    assert_equal "Barry Trotz", @stat_tracker.winningest_coach("20152016")
   end
 
   def test_worst_coach
-    assert_equal "Todd Richards", @stat_tracker.worst_coach(20152016)
+    assert_equal "Todd Richards", @stat_tracker.worst_coach("20152016")
   end
 
   def test_most_accurate_team
-    assert_equal "New York City FC", @stat_tracker.most_accurate_team(20152016)
+    assert_equal "New York City FC", @stat_tracker.most_accurate_team("20152016")
   end
 
   def test_least_accurate_team
-    assert_equal "North Carolina Courage", @stat_tracker.least_accurate_team(20152016)
+    assert_equal "North Carolina Courage", @stat_tracker.least_accurate_team("20152016")
   end
 
   def test_most_tackles
-    assert_equal "Seattle Sounders FC", @stat_tracker.most_tackles(20152016)
+    assert_equal "Seattle Sounders FC", @stat_tracker.most_tackles("20152016")
   end
 
   def test_fewest_tackles
-    assert_equal "Montreal Impact", @stat_tracker.fewest_tackles(20152016)
+    assert_equal "Montreal Impact", @stat_tracker.fewest_tackles("20152016")
   end
 
   def test_can_retrieve_team_info
