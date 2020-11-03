@@ -94,8 +94,12 @@ class GameTeamsManagerTest < Minitest::Test
   def test_fewest_tackles
     assert_equal "Atlanta United", @game_teams_manager.fewest_tackles("20132014")
   end
-
+#check assertion-- may be fixture file assertion
   def test_team_with_best_offense
     assert_equal "New York City FC", @game_teams_manager.best_offense
+  end
+
+  def test_team_with_worst_offense
+    assert_equal "DC United", @game_teams_manager.worst_offense
   end
 end
