@@ -2,9 +2,13 @@ require_relative './test_helper'
 
 class GamesManagerTest < Minitest::Test
   def setup
-    location = './data/fixture_files/games.csv'
-    parent = nil
-    @games_manager = GamesManager.get_data(location, parent)
+    locations = {
+      games: './data/games.csv',
+      teams: './data/teams.csv',
+      game_teams: './data/game_teams.csv'
+    }
+    @controller = StatTracker.from_csv(locations)
+    @games_manager = @controller.games_manager
   end
 
   def test_it_exists_and_has_attributes	
@@ -46,5 +50,25 @@ class GamesManagerTest < Minitest::Test
     }
     
     assert_equal hash, @games_manager.average_goals_by_season
+  end
+
+  def test_best_best_season
+    assert_equal "x", @games_manager.best_season("6")
+  end
+
+  def test_retrieve_best_season_by_team
+    assert_equal "20122013", @games_manager.best_season("6")
+  end
+  
+  def test_retrieve_worst_season_by_team
+    assert_equal "20122013", @games_manager.worst_season("6")
+  end
+
+  def test_can_check_favorite_opponent
+    assert_equal "Houston Dynamo", @games_manager.favorite_opponent("6")
+  end
+
+  def test_can_check_rival
+    assert_equal "Houston Dynamo", @games_manager.rival("6")
   end
 end
