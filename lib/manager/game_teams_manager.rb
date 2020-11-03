@@ -231,7 +231,6 @@ class GameTeamsManager
   #     hash
   #   end
   # end
-end
   def best_offense
     team_stats = {}
     game_teams.each do |game_team|
