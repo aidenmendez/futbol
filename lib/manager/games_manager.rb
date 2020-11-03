@@ -82,4 +82,21 @@ class GamesManager
 
     parent.get_team_name(highest_scoring_away_team)
   end
+
+  def highest_scoring_home_team
+    team_stats = {}
+    games.each do |game|
+      if team_stats[game.home_team_id]
+        team_stats[game.home_team_id][:total_home_goals] += game.home_goals
+        team_stats[game.home_team_id][:total_home_games] += 1
+      else
+        team_stats[game.home_team_id] = {total_home_games: 1, total_home_goals: game.home_goals}
+      end
+    end
+    highest_scoring_home_team = team_stats.max_by do |team, stats|
+      stats[:total_home_goals].to_f / stats[:total_home_games]
+    end[0]
+
+    parent.get_team_name(highest_scoring_home_team)
+  end
 end
