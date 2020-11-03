@@ -56,7 +56,15 @@ class GameTeamsManagerTest < Minitest::Test
   # end
 
   def test_game_ids_by_season
+    parent = nil
+    games_manager = @controller.games_manager
+    game1 = Game.new({game_id: "2012030221", season: "20122013",type: "Postseason", date_time: "5/16/13", away_team_id: "3", home_team_id: "6", away_goals: 2, home_goals: 3, venue: "Toyota Stadium", venue_link: "/api/v1/venues/null"}, parent)
+    game2 = Game.new({game_id: "2012030223", season: "20122013",type: "Postseason", date_time: "5/16/13", away_team_id: "3", home_team_id: "6", away_goals: 2, home_goals: 3, venue: "Toyota Stadium", venue_link: "/api/v1/venues/null"}, parent)
+    game3 = Game.new({game_id: "2012030225", season: "20122011",type: "Postseason", date_time: "5/16/13", away_team_id: "3", home_team_id: "6", away_goals: 2, home_goals: 3, venue: "Toyota Stadium", venue_link: "/api/v1/venues/null"}, parent)
+    games_objects = [game1, game2, game3]
+    games_manager.stubs(:games).returns(games_objects)
 
+    assert_equal [game1.game_id, game2.game_id], @game_teams_manager.game_ids_by_season("20122013")
   end
 
   def test_get_stats
