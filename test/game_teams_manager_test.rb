@@ -117,7 +117,6 @@ class GameTeamsManagerTest < Minitest::Test
   def test_can_retrieve_fewest_number_of_goals_from_single_game
     assert_equal 0, @game_teams_manager.fewest_goals_scored("6")
   end
-end
 #check assertion-- may be fixture file assertion
   def test_team_with_best_offense
     assert_equal "New York City FC", @game_teams_manager.best_offense
