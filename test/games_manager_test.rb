@@ -62,4 +62,8 @@ class GamesManagerTest < Minitest::Test
   def test_lowest_scoring_visitor
     assert_equal "Seattle Sounders FC", @games_manager.lowest_scoring_visitor
   end
+
+  def test_lowest_scoring_home_team
+    assert_equal "Chicago Fire", @games_manager.lowest_scoring_home_team
+  end
 end
