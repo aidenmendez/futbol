@@ -167,10 +167,10 @@ class GamesManager
     @games.each do |game|
       if game.home_team_id == team_id
         if seasons[game.season]
-          seasons[game.season][:total_games] += 1
-          seasons[game.season][:total_home_wins] += 1 if game.home_goals > game.away_goals
+           seasons[game.season][:total_games] += 1
+           seasons[game.season][:total_home_wins] += 1 if game.home_goals > game.away_goals
         else
-          seasons[game.season] = { total_games: 1, 
+           seasons[game.season] = { total_games: 1, 
                                     total_home_wins: 1,
                                     total_away_wins: 0 }
         end
@@ -184,11 +184,11 @@ class GamesManager
         end
       end
     end
-      worst_win_rate = seasons.min_by do |season, stats|
-        ((stats[:total_home_wins] + stats[:total_away_wins]).to_f * 100 / stats[:total_games]).round(2)
-      end
-      worst_win_rate[0]
+    worst_win_rate = seasons.min_by do |season, stats|
+      ((stats[:total_home_wins] + stats[:total_away_wins]).to_f * 100 / stats[:total_games]).round(2)
     end
+    worst_win_rate[0]
+  end
 
   def favorite_opponent(team_id)
     favorite_opponents = {}

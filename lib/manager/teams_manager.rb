@@ -19,9 +19,10 @@ class TeamsManager
   end
 
   def get_team_name(accurate_team_id)
-    team_name = teams.find do |team|
+    team = teams.find do |team|
       team.team_id == accurate_team_id
-    end.team_name
+    end
+    team.team_name
   end
 
   def team_info(team_id)

@@ -107,7 +107,7 @@ class GameTeamsManagerTest < Minitest::Test
   end
 
   def test_can_retrieve_average_win_percentage_for_all_games_for_a_team
-    assert_equal 1.00, @game_teams_manager.average_win_percentage("6")
+    assert_equal 0.49, @game_teams_manager.average_win_percentage("6")
   end
 
   def test_can_retrieve_highest_number_of_goals_from_single_game
