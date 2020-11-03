@@ -59,10 +59,27 @@ class GamesManager
         next if season != game.season
         total_goals += game.total_score
       end
-      
+
       avg = (total_goals.to_f / season_average_goals[season]).round(2)
       season_average_goals[season] = avg
     end
     season_average_goals
+  end
+
+  def highest_scoring_visitor
+    team_stats = {}
+    games.each do |game|
+      if team_stats[game.away_team_id]
+        team_stats[game.away_team_id][:total_away_goals] += game.away_goals
+        team_stats[game.away_team_id][:total_away_games] += 1
+      else
+        team_stats[game.away_team_id] = {total_away_games: 1, total_away_goals: game.away_goals}
+      end
+    end
+    highest_scoring_away_team = team_stats.max_by do |team, stats|
+      stats[:total_away_goals].to_f / stats[:total_away_games]
+    end[0]
+
+    parent.get_team_name(highest_scoring_away_team)
   end
 end
