@@ -136,7 +136,7 @@ class GameTeamsManager
       end[0]
     end
 
-    team_name = parent.get_team_name(accurate_team_id)
+    parent.get_team_name(accurate_team_id)
   end
 
   def get_game_stats(season, seasonal_games)
@@ -180,7 +180,7 @@ class GameTeamsManager
       end[0]
     end
 
-    team_name = parent.get_team_name(tackles_team_id)
+    parent.get_team_name(tackles_team_id)
   end
 
   def average_win_percentage(team_id)
