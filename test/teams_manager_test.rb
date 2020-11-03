@@ -16,7 +16,7 @@ class TeamsManagerTest < Minitest::Test
   end
 
   def test_can_retrieve_team_info
-    expected = {team_id: "6", franchise_id: "6", team_name: "FC Dallas", abbreviation: "DAL", link: "/api/v1/teams/6"}
+    expected = {"team_id"=>"6", "franchise_id"=>"6", "team_name"=>"FC Dallas", "abbreviation"=>"DAL", "link"=>"/api/v1/teams/6"}
     assert_equal expected, @teams_manager.team_info("6")
   end
 end
