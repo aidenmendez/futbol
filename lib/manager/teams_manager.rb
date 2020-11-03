@@ -23,4 +23,16 @@ class TeamsManager
       team.team_id == accurate_team_id
     end.team_name
   end
+
+  def team_info(team_id)
+    @teams.each_with_object({}) do |team, breakdown|
+      if team.team_id == team_id
+        breakdown[:team_id] = team.team_id
+        breakdown[:franchise_id] = team.franchise_id
+        breakdown[:team_name] = team.team_name
+        breakdown[:abbreviation] = team.abbreviation
+        breakdown[:link] = team.link
+      end
+    end
+  end
 end
