@@ -73,4 +73,8 @@ class GamesManagerTest < Minitest::Test
   def test_lowest_scoring_home_team
     assert_equal "Utah Royals FC", @games_manager.lowest_scoring_home_team
   end
+
+  def test_calc_percentage
+    assert_equal 0.33, @games_manager.calc_percentage(1, 3)
+  end
 end
