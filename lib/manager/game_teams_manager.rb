@@ -2,7 +2,6 @@ require_relative '../mathable'
 class GameTeamsManager
   include Mathable
   attr_reader :location,
-              :parent,
               :game_teams
 
   def self.get_data(location, parent)
@@ -57,7 +56,6 @@ class GameTeamsManager
 
   def coaches_by_season(season, season_game_teams)
     coaches = {}
-
     season_game_teams.each do |game_team|
       coaches[game_team.head_coach] = {:games => 0, :wins => 0}
     end
@@ -130,7 +128,7 @@ class GameTeamsManager
         stats[:goals].to_f / stats[:shots]
       end[0]
     end
-    parent.get_team_name(accurate_team_id)
+    @parent.get_team_name(accurate_team_id)
   end
 
   def get_game_stats(season, seasonal_games)
@@ -171,7 +169,7 @@ class GameTeamsManager
         stats[:tackles]
       end[0]
     end
-    parent.get_team_name(tackles_team_id)
+    @parent.get_team_name(tackles_team_id)
   end
 
   def average_win_percentage(team_id)
@@ -186,7 +184,6 @@ class GameTeamsManager
       end
     end
     average(total_win, total_game)
-    #(total_win.to_f / total_game).round(2)
   end
   
   def most_or_fewest_goals_scored(team_id, most_or_fewest)
@@ -234,7 +231,7 @@ class GameTeamsManager
         calculate_percentage(stats[:total_goals].to_f, stats[:total_games])
       end[0]
     end
-    parent.get_team_name(team)
+    @parent.get_team_name(team)
   end
 
   def calculate_percentage(numer, denom)
