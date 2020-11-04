@@ -1,4 +1,6 @@
+require_relative '../mathable'
 class GameTeamsManager
+  include Mathable
   attr_reader :location,
               :parent,
               :game_teams
@@ -106,10 +108,6 @@ class GameTeamsManager
       ties += 0.5 if game_team.result == "TIE"
     end
     calc_percentage(ties, total_games)
-  end
-
-  def calc_percentage(numerator, denominator)
-    (numerator.to_f / denominator).round(2)
   end
 
   def most_accurate_team(season)

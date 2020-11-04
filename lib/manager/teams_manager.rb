@@ -1,4 +1,6 @@
+require_relative '../mathable'
 class TeamsManager
+  include Mathable
   attr_reader :location,
               :parent,
               :teams
