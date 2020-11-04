@@ -1,4 +1,6 @@
+require './lib/mathable'
 class GamesManager
+  include Mathable
   attr_reader :location,
               :parent,
               :games
