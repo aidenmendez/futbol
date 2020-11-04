@@ -48,7 +48,7 @@ class GamesManager
     total_goals = games.reduce(0) do |sum, game|
       sum + game.total_score
     end
-    average(total_goals, games)#(total_goals.to_f / (games.count)).round(2)
+    average(total_goals, games)
   end
 
   def average_goals_by_season
@@ -56,13 +56,10 @@ class GamesManager
     seasons = season_average_goals.keys
     seasons.each do |season|
       total_goals = 0
-
       games.each do |game|
         next if season != game.season
         total_goals += game.total_score
       end
-      
-      #avg = (total_goals.to_f / season_average_goals[season]).round(2)
       season_average_goals[season] = average(total_goals, season_average_goals[season])
     end
     season_average_goals
@@ -79,10 +76,8 @@ class GamesManager
       end
     end
     highest_scoring_away_team_id = team_stats.max_by do |team, stats|
-      #stats[:total_away_goals].to_f / stats[:total_away_games]
       average(stats[:total_away_goals], stats[:total_away_games])
     end[0]
-
     parent.get_team_name(highest_scoring_away_team_id)
   end
 
@@ -97,9 +92,8 @@ class GamesManager
       end
     end
     highest_scoring_home_team_id = team_stats.max_by do |team, stats|
-      stats[:total_home_goals].to_f / stats[:total_home_games]
+      average(stats[:total_home_goals], stats[:total_home_games])
     end[0]
-
     parent.get_team_name(highest_scoring_home_team_id)
   end
 
@@ -114,9 +108,8 @@ class GamesManager
       end
     end
     lowest_scoring_away_team_id = team_stats.min_by do |team, stats|
-      stats[:total_away_goals].to_f / stats[:total_away_games]
+      average(stats[:total_away_goals], stats[:total_away_games])
     end[0]
-
     parent.get_team_name(lowest_scoring_away_team_id)
   end
 
@@ -131,9 +124,8 @@ class GamesManager
       end
     end
     lowest_scoring_home_team_id = team_stats.min_by do |team, stats|
-      stats[:total_home_goals].to_f / stats[:total_home_games]
+      average(stats[:total_home_goals], stats[:total_home_games])
     end[0]
-
     parent.get_team_name(lowest_scoring_home_team_id)
   end
 
