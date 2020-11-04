@@ -1,4 +1,4 @@
-require './lib/mathable'
+require_relative '../mathable'
 class GameTeamsManager
   include Mathable
   attr_reader :location,
