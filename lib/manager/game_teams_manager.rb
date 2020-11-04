@@ -207,35 +207,18 @@ class GameTeamsManager
     most_or_fewest_goals_scored(team_id, "fewest")
   end
 
-  # def count_team_games(team_id)
-  #   hash = {}
-  #   game_teams.each do |game_team|
-  #     next if game_team[team_id] != team_id
-  #     hash[game_team.game_id] = {:win => false} 
-  #     if game_team[:result] == "WIN"
-  #       hash[game_team.game_id][:win] = true
-  #     end
-
-  #     hash
-  #   end
-  # end
-
   def best_or_worst_offense(best_or_worst)
     team_stats = offense_team_hash
     if best_or_worst == "best"
       team = team_stats.max_by do |team, stats|
-        calculate_percentage(stats[:total_goals].to_f, stats[:total_games])
+        calc_percentage(stats[:total_goals].to_f, stats[:total_games])
       end[0]
     elsif best_or_worst == "worst"
       team = team_stats.min_by do |team, stats|
-        calculate_percentage(stats[:total_goals].to_f, stats[:total_games])
+        calc_percentage(stats[:total_goals].to_f, stats[:total_games])
       end[0]
     end
     @parent.get_team_name(team)
-  end
-
-  def calculate_percentage(numer, denom)
-    numer / denom
   end
 
   def offense_team_hash
