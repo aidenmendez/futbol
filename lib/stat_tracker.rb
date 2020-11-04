@@ -5,8 +5,10 @@ require_relative './manager/game_teams_manager'
 require_relative './manager/manager'
 require_relative './manager/teams_manager'
 require_relative './manager/games_manager'
+require_relative './mathable'
 
 class StatTracker
+  include Mathable
   attr_reader :games_path,
               :game_teams_path,
               :teams_path,
