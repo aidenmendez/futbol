@@ -185,7 +185,8 @@ class GameTeamsManager
         total_game += 1
       end
     end
-    (total_win.to_f / total_game).round(2)
+    average(total_win, total_game)
+    #(total_win.to_f / total_game).round(2)
   end
   
   def most_or_fewest_goals_scored(team_id, most_or_fewest)
