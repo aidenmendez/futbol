@@ -1,5 +1,4 @@
 require_relative './test_helper'
-require 'csv'
 
 class StatTrackerTest < MiniTest::Test
 
