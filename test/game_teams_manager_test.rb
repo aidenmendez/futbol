@@ -25,7 +25,7 @@ class GameTeamsManagerTest < Minitest::Test
       "Jon Cooper" => {:games => 0, :wins => 0}
     }
     season_game_teams = []
-    parent = nil
+    parent = mock("Parent")
     game_1 = GameTeam.new({ game_id: "2014030411", goals: 2, head_coach: "Joel Quenneville", hoa: "away", result: "WIN", settled_in: "REG", shots: 5, tackles: 21, team_id: "16" }, parent)
     game_2 = GameTeam.new({ game_id: "2014030411", goals: 1, head_coach: "Jon Cooper", hoa: "home", result: "LOSS", settled_in: "REG", shots: 5, tackles: 29, team_id: "14" }, parent)
     season_game_teams = [game_1, game_2]
@@ -46,7 +46,7 @@ class GameTeamsManagerTest < Minitest::Test
   end
 
   def test_game_ids_by_season
-    parent = nil
+    parent = mock("Parent")
     games_manager = @controller.games_manager
     game1 = Game.new({game_id: "2012030221", season: "20122013",type: "Postseason", date_time: "5/16/13", away_team_id: "3", home_team_id: "6", away_goals: 2, home_goals: 3, venue: "Toyota Stadium", venue_link: "/api/v1/venues/null"}, parent)
     game2 = Game.new({game_id: "2012030223", season: "20122013",type: "Postseason", date_time: "5/16/13", away_team_id: "3", home_team_id: "6", away_goals: 2, home_goals: 3, venue: "Toyota Stadium", venue_link: "/api/v1/venues/null"}, parent)
@@ -58,7 +58,7 @@ class GameTeamsManagerTest < Minitest::Test
   end
 
   def test_get_stats
-    parent = mock("parent")
+    parent = mock("Parent")
     game_1 = GameTeam.new({ game_id: "2014030411", goals: 2, head_coach: "Joel Quenneville", hoa: "away", result: "WIN", settled_in: "REG", shots: 5, tackles: 21, team_id: "16" }, parent)
     game_2 = GameTeam.new({ game_id: "2014030411", goals: 1, head_coach: "Jon Cooper", hoa: "home", result: "LOSS", settled_in: "REG", shots: 5, tackles: 29, team_id: "14" }, parent)
     game_3 = GameTeam.new({ game_id: "2014034363", goals: 1, head_coach: "Jon Cooper", hoa: "home", result: "LOSS", settled_in: "REG", shots: 5, tackles: 29, team_id: "14" }, parent)
