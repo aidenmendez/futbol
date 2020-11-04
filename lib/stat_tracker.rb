@@ -1,4 +1,3 @@
-require_relative './stat_tracker'
 require_relative './model/game_team'
 require_relative './model/game'
 require_relative './model/team'
