@@ -1,12 +1,11 @@
-require_relative './test_helper'
+require_relative "./test_helper"
 
 class StatTrackerTest < MiniTest::Test
-
   def setup
     locations = {
-      games: './data/games.csv',
-      teams: './data/teams.csv',
-      game_teams: './data/game_teams.csv'
+      games: "./data/games.csv",
+      teams: "./data/teams.csv",
+      game_teams: "./data/game_teams.csv"
     }
     @stat_tracker = StatTracker.from_csv(locations)
   end
@@ -36,7 +35,7 @@ class StatTrackerTest < MiniTest::Test
   end
 
   def test_can_retrieve_team_info
-    expected = {"team_id"=>"6", "franchise_id"=>"6", "team_name"=>"FC Dallas", "abbreviation"=>"DAL", "link"=>"/api/v1/teams/6"}
+    expected = {"team_id" => "6", "franchise_id" => "6", "team_name" => "FC Dallas", "abbreviation" => "DAL", "link" => "/api/v1/teams/6"}
     assert_equal expected, @stat_tracker.team_info("6")
   end
 
@@ -81,14 +80,14 @@ class StatTrackerTest < MiniTest::Test
   end
 
   def test_average_goals_by_season
-    goals = { 
-      "20122013"=>4.12,
-      "20162017"=>4.23, 
-      "20142015"=>4.14, 
-      "20152016"=>4.16, 
-      "20132014"=>4.19, 
-      "20172018"=>4.44 
-            }
+    goals = {
+      "20122013" => 4.12,
+      "20162017" => 4.23,
+      "20142015" => 4.14,
+      "20152016" => 4.16,
+      "20132014" => 4.19,
+      "20172018" => 4.44
+    }
 
     assert_equal goals, @stat_tracker.average_goals_by_season
   end
@@ -134,7 +133,7 @@ class StatTrackerTest < MiniTest::Test
   end
 
   def test_count_of_games_by_season
-    hash = {"20122013"=>806, "20162017"=>1317, "20142015"=>1319, "20152016"=>1321, "20132014"=>1323, "20172018"=>1355}
+    hash = {"20122013" => 806, "20162017" => 1317, "20142015" => 1319, "20152016" => 1321, "20132014" => 1323, "20172018" => 1355}
     assert_equal hash, @stat_tracker.count_of_games_by_season
   end
 end

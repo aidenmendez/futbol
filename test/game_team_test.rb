@@ -1,7 +1,6 @@
-require_relative './test_helper'
+require_relative "./test_helper"
 
 class GameTeamTest < Minitest::Test
-
   def setup
     row = {
       game_id: "2012030111",
@@ -13,7 +12,7 @@ class GameTeamTest < Minitest::Test
       goals: "3",
       shots: "6",
       tackles: "36"
-      }
+    }
     parent = nil
     @game_team = GameTeam.new(row, parent)
   end
