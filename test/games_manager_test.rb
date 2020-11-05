@@ -1,11 +1,11 @@
-require_relative './test_helper'
+require_relative "./test_helper"
 
 class GamesManagerTest < Minitest::Test
   def setup
     locations = {
-      games: './data/games.csv',
-      teams: './data/teams.csv',
-      game_teams: './data/game_teams.csv'
+      games: "./data/games.csv",
+      teams: "./data/teams.csv",
+      game_teams: "./data/game_teams.csv"
     }
     @controller = StatTracker.from_csv(locations)
     @games_manager = @controller.games_manager
@@ -25,7 +25,7 @@ class GamesManagerTest < Minitest::Test
   end
 
   def test_count_of_games_by_season
-    hash = {"20122013"=>806, "20162017"=>1317, "20142015"=>1319, "20152016"=>1321, "20132014"=>1323, "20172018"=>1355}
+    hash = {"20122013" => 806, "20162017" => 1317, "20142015" => 1319, "20152016" => 1321, "20132014" => 1323, "20172018" => 1355}
     assert_equal hash, @games_manager.count_of_games_by_season
   end
 
@@ -34,7 +34,7 @@ class GamesManagerTest < Minitest::Test
   end
 
   def test_average_goals_by_season
-    hash = {"20122013"=>4.12, "20162017"=>4.23, "20142015"=>4.14, "20152016"=>4.16, "20132014"=>4.19, "20172018"=>4.44}
+    hash = {"20122013" => 4.12, "20162017" => 4.23, "20142015" => 4.14, "20152016" => 4.16, "20132014" => 4.19, "20172018" => 4.44}
     assert_equal hash, @games_manager.average_goals_by_season
   end
 
@@ -45,7 +45,7 @@ class GamesManagerTest < Minitest::Test
   def test_retrieve_best_season_by_team
     assert_equal "20132014", @games_manager.best_season("6")
   end
-  
+
   def test_retrieve_worst_season_by_team
     assert_equal "20142015", @games_manager.worst_season("6")
   end

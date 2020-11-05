@@ -1,9 +1,9 @@
-require_relative '../mathable'
+require_relative "../mathable"
 class TeamsManager
   include Mathable
   attr_reader :location,
-              :parent,
-              :teams
+    :parent,
+    :teams
 
   def self.get_data(location, parent)
     teams = []
@@ -21,9 +21,9 @@ class TeamsManager
   end
 
   def get_team_name(accurate_team_id)
-    team = teams.find do |team|
+    team = teams.find { |team|
       team.team_id == accurate_team_id
-    end
+    }
     team.team_name
   end
 

@@ -1,11 +1,11 @@
-require_relative './test_helper'
+require_relative "./test_helper"
 
 class GameTeamsManagerTest < Minitest::Test
   def setup
     locations = {
-      games: './data/games.csv',
-      teams: './data/teams.csv',
-      game_teams: './data/game_teams.csv'
+      games: "./data/games.csv",
+      teams: "./data/teams.csv",
+      game_teams: "./data/game_teams.csv"
     }
     @controller = StatTracker.from_csv(locations)
     @game_teams_manager = @controller.game_teams_manager
@@ -21,13 +21,13 @@ class GameTeamsManagerTest < Minitest::Test
 
   def test_coaches_by_season
     coach_hash = {
-      "Joel Quenneville" => {:games => 0, :wins => 0},
-      "Jon Cooper" => {:games => 0, :wins => 0}
+      "Joel Quenneville" => {games: 0, wins: 0},
+      "Jon Cooper" => {games: 0, wins: 0}
     }
     season_game_teams = []
     parent = mock("Parent")
-    game_1 = GameTeam.new({ game_id: "2014030411", goals: 2, head_coach: "Joel Quenneville", hoa: "away", result: "WIN", settled_in: "REG", shots: 5, tackles: 21, team_id: "16" }, parent)
-    game_2 = GameTeam.new({ game_id: "2014030411", goals: 1, head_coach: "Jon Cooper", hoa: "home", result: "LOSS", settled_in: "REG", shots: 5, tackles: 29, team_id: "14" }, parent)
+    game_1 = GameTeam.new({game_id: "2014030411", goals: 2, head_coach: "Joel Quenneville", hoa: "away", result: "WIN", settled_in: "REG", shots: 5, tackles: 21, team_id: "16"}, parent)
+    game_2 = GameTeam.new({game_id: "2014030411", goals: 1, head_coach: "Jon Cooper", hoa: "home", result: "LOSS", settled_in: "REG", shots: 5, tackles: 29, team_id: "14"}, parent)
     season_game_teams = [game_1, game_2]
 
     assert_equal coach_hash, @game_teams_manager.coaches_by_season("20152016", season_game_teams)
@@ -35,9 +35,9 @@ class GameTeamsManagerTest < Minitest::Test
 
   def test_game_team_by_season
     parent = mock("Parent")
-    game_1 = GameTeam.new({ game_id: "2014030411", goals: 2, head_coach: "Joel Quenneville", hoa: "away", result: "WIN", settled_in: "REG", shots: 5, tackles: 21, team_id: "16" }, parent)
-    game_2 = GameTeam.new({ game_id: "2014030411", goals: 1, head_coach: "Jon Cooper", hoa: "home", result: "LOSS", settled_in: "REG", shots: 5, tackles: 29, team_id: "14" }, parent)
-    game_3 = GameTeam.new({ game_id: "2014034363", goals: 1, head_coach: "Jon Cooper", hoa: "home", result: "LOSS", settled_in: "REG", shots: 5, tackles: 29, team_id: "14" }, parent)
+    game_1 = GameTeam.new({game_id: "2014030411", goals: 2, head_coach: "Joel Quenneville", hoa: "away", result: "WIN", settled_in: "REG", shots: 5, tackles: 21, team_id: "16"}, parent)
+    game_2 = GameTeam.new({game_id: "2014030411", goals: 1, head_coach: "Jon Cooper", hoa: "home", result: "LOSS", settled_in: "REG", shots: 5, tackles: 29, team_id: "14"}, parent)
+    game_3 = GameTeam.new({game_id: "2014034363", goals: 1, head_coach: "Jon Cooper", hoa: "home", result: "LOSS", settled_in: "REG", shots: 5, tackles: 29, team_id: "14"}, parent)
     season_game_teams = [game_1.game_id, game_2.game_id]
     @game_teams_manager.stubs(:game_teams).returns([game_1, game_2, game_3])
     @game_teams_manager.expects(:game_ids_by_season).returns(season_game_teams)
@@ -48,9 +48,9 @@ class GameTeamsManagerTest < Minitest::Test
   def test_game_ids_by_season
     parent = mock("Parent")
     games_manager = @controller.games_manager
-    game1 = Game.new({game_id: "2012030221", season: "20122013",type: "Postseason", date_time: "5/16/13", away_team_id: "3", home_team_id: "6", away_goals: 2, home_goals: 3, venue: "Toyota Stadium", venue_link: "/api/v1/venues/null"}, parent)
-    game2 = Game.new({game_id: "2012030223", season: "20122013",type: "Postseason", date_time: "5/16/13", away_team_id: "3", home_team_id: "6", away_goals: 2, home_goals: 3, venue: "Toyota Stadium", venue_link: "/api/v1/venues/null"}, parent)
-    game3 = Game.new({game_id: "2012030225", season: "20122011",type: "Postseason", date_time: "5/16/13", away_team_id: "3", home_team_id: "6", away_goals: 2, home_goals: 3, venue: "Toyota Stadium", venue_link: "/api/v1/venues/null"}, parent)
+    game1 = Game.new({game_id: "2012030221", season: "20122013", type: "Postseason", date_time: "5/16/13", away_team_id: "3", home_team_id: "6", away_goals: 2, home_goals: 3, venue: "Toyota Stadium", venue_link: "/api/v1/venues/null"}, parent)
+    game2 = Game.new({game_id: "2012030223", season: "20122013", type: "Postseason", date_time: "5/16/13", away_team_id: "3", home_team_id: "6", away_goals: 2, home_goals: 3, venue: "Toyota Stadium", venue_link: "/api/v1/venues/null"}, parent)
+    game3 = Game.new({game_id: "2012030225", season: "20122011", type: "Postseason", date_time: "5/16/13", away_team_id: "3", home_team_id: "6", away_goals: 2, home_goals: 3, venue: "Toyota Stadium", venue_link: "/api/v1/venues/null"}, parent)
     games_objects = [game1, game2, game3]
     games_manager.stubs(:games).returns(games_objects)
 
@@ -59,25 +59,23 @@ class GameTeamsManagerTest < Minitest::Test
 
   def test_get_stats
     parent = mock("Parent")
-    game_1 = GameTeam.new({ game_id: "2014030411", goals: 2, head_coach: "Joel Quenneville", hoa: "away", result: "WIN", settled_in: "REG", shots: 5, tackles: 21, team_id: "16" }, parent)
-    game_2 = GameTeam.new({ game_id: "2014030411", goals: 1, head_coach: "Jon Cooper", hoa: "home", result: "LOSS", settled_in: "REG", shots: 5, tackles: 29, team_id: "14" }, parent)
-    game_3 = GameTeam.new({ game_id: "2014034363", goals: 1, head_coach: "Jon Cooper", hoa: "home", result: "LOSS", settled_in: "REG", shots: 5, tackles: 29, team_id: "14" }, parent)
+    game_1 = GameTeam.new({game_id: "2014030411", goals: 2, head_coach: "Joel Quenneville", hoa: "away", result: "WIN", settled_in: "REG", shots: 5, tackles: 21, team_id: "16"}, parent)
+    game_2 = GameTeam.new({game_id: "2014030411", goals: 1, head_coach: "Jon Cooper", hoa: "home", result: "LOSS", settled_in: "REG", shots: 5, tackles: 29, team_id: "14"}, parent)
+    game_3 = GameTeam.new({game_id: "2014034363", goals: 1, head_coach: "Jon Cooper", hoa: "home", result: "LOSS", settled_in: "REG", shots: 5, tackles: 29, team_id: "14"}, parent)
     season_game_teams = [game_1, game_2, game_3]
     season = mock("season")
     coaches = {"Joel Quenneville" => {games: 0, wins: 0},
-              "Jon Cooper" => {games: 0, wins: 0}
-              }
-    
+               "Jon Cooper" => {games: 0, wins: 0}}
+
     expected = {"Joel Quenneville" => {games: 1, wins: 1},
-                "Jon Cooper" => {games: 2, wins: 0}
-                }
+                "Jon Cooper" => {games: 2, wins: 0}}
     assert_equal expected, @game_teams_manager.get_stats(coaches, season, season_game_teams)
   end
 
   def test_calc_coach_percentage
     coach_stats = {"Harry Potter" => {wins: 5, games: 10},
-                  "Hairy Potter" => {wins: 7, games: 10} }
-    
+                   "Hairy Potter" => {wins: 7, games: 10}}
+
     expected = {"Harry Potter" => 0.5, "Hairy Potter" => 0.7}
     assert_equal expected, @game_teams_manager.calc_coach_percentage(coach_stats)
   end
@@ -129,7 +127,7 @@ class GameTeamsManagerTest < Minitest::Test
   def test_can_retrieve_fewest_number_of_goals_from_single_game
     assert_equal 0, @game_teams_manager.fewest_goals_scored("6")
   end
-  
+
   def test_team_with_best_offense
     assert_equal "Reign FC", @game_teams_manager.best_offense
   end

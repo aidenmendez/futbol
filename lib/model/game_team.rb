@@ -1,17 +1,16 @@
 class GameTeam
   attr_reader :game_id,
-              :team_id,
-              :hoa,
-              :result,
-              :settled_in,
-              :head_coach,
-              :goals,
-              :shots,
-              :tackles
-
+    :team_id,
+    :hoa,
+    :result,
+    :settled_in,
+    :head_coach,
+    :goals,
+    :shots,
+    :tackles
 
   def initialize(data, parent)
-    @parent = parent 
+    @parent = parent
     @game_id = data[:game_id]
     @team_id = data[:team_id]
     @hoa = data[:hoa]

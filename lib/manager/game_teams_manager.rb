@@ -1,8 +1,8 @@
-require_relative '../mathable'
+require_relative "../mathable"
 class GameTeamsManager
   include Mathable
   attr_reader :location,
-              :game_teams
+    :game_teams
 
   def self.get_data(location, parent)
     game_teams = []
@@ -33,13 +33,13 @@ class GameTeamsManager
     coach_stats = get_stats(coaches, season, season_game_teams)
     coach_win_percentage = calc_coach_percentage(coach_stats)
     if status == "winningest"
-      coach_win_percentage.max_by do |coach, percent|
+      coach_win_percentage.max_by { |coach, percent|
         percent
-      end[0]
+      }[0]
     elsif status == "worst"
-      coach_win_percentage.min_by do |coach, percent|
+      coach_win_percentage.min_by { |coach, percent|
         percent
-      end[0]
+      }[0]
     end
   end
 
@@ -57,7 +57,7 @@ class GameTeamsManager
   def coaches_by_season(season, season_game_teams)
     coaches = {}
     season_game_teams.each do |game_team|
-      coaches[game_team.head_coach] = {:games => 0, :wins => 0}
+      coaches[game_team.head_coach] = {games: 0, wins: 0}
     end
     coaches
   end
@@ -120,13 +120,13 @@ class GameTeamsManager
     seasonal_games = game_team_by_season(season)
     team_stats = get_game_stats(season, seasonal_games)
     if status == "most"
-      accurate_team_id = team_stats.max_by do |team_id, stats|
+      accurate_team_id = team_stats.max_by { |team_id, stats|
         stats[:goals].to_f / stats[:shots]
-      end[0]
+      }[0]
     elsif status == "least"
-      accurate_team_id = team_stats.min_by do |team_id, stats|
+      accurate_team_id = team_stats.min_by { |team_id, stats|
         stats[:goals].to_f / stats[:shots]
-      end[0]
+      }[0]
     end
     @parent.get_team_name(accurate_team_id)
   end
@@ -136,9 +136,9 @@ class GameTeamsManager
     seasonal_games.each do |seasonal_game|
       if !team_stats.key?(seasonal_game.team_id)
         team_stats[seasonal_game.team_id] = {
-          :shots => seasonal_game.shots,
-          :goals => seasonal_game.goals,
-          :tackles => seasonal_game.tackles
+          shots: seasonal_game.shots,
+          goals: seasonal_game.goals,
+          tackles: seasonal_game.tackles
         }
       else
         team_stats[seasonal_game.team_id][:shots] += seasonal_game.shots
@@ -161,13 +161,13 @@ class GameTeamsManager
     seasonal_games = game_team_by_season(season)
     team_stats = get_game_stats(season, seasonal_games)
     if status == "most"
-      tackles_team_id = team_stats.max_by do |team_id, stats|
+      tackles_team_id = team_stats.max_by { |team_id, stats|
         stats[:tackles]
-      end[0]
+      }[0]
     elsif status == "fewest"
-      tackles_team_id = team_stats.min_by do |team_id, stats|
+      tackles_team_id = team_stats.min_by { |team_id, stats|
         stats[:tackles]
-      end[0]
+      }[0]
     end
     @parent.get_team_name(tackles_team_id)
   end
@@ -185,10 +185,10 @@ class GameTeamsManager
     end
     average(total_win, total_game)
   end
-  
+
   def most_or_fewest_goals_scored(team_id, most_or_fewest)
     games_array = games_by_team(team_id)
-    if most_or_fewest == "most" 
+    if most_or_fewest == "most"
       games_array.max_by { |game_team| game_team.goals }
     elsif most_or_fewest == "fewest"
       games_array.min_by { |game_team| game_team.goals }
@@ -210,13 +210,13 @@ class GameTeamsManager
   def best_or_worst_offense(best_or_worst)
     team_stats = offense_team_hash
     if best_or_worst == "best"
-      team = team_stats.max_by do |team, stats|
+      team = team_stats.max_by { |team, stats|
         calc_percentage(stats[:total_goals].to_f, stats[:total_games])
-      end[0]
+      }[0]
     elsif best_or_worst == "worst"
-      team = team_stats.min_by do |team, stats|
+      team = team_stats.min_by { |team, stats|
         calc_percentage(stats[:total_goals].to_f, stats[:total_games])
-      end[0]
+      }[0]
     end
     @parent.get_team_name(team)
   end
